@@ -8,6 +8,7 @@ class Objeto {
 	int cantidad;
 public:
 	Objeto(string nombre, int durabilidad, bool comestible, int cantidad);
+	Objeto();
 	string getNombre();
 	void setNombre(string nombre);
 	int getDurabilidad();

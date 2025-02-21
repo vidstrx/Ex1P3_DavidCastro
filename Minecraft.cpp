@@ -7,7 +7,7 @@ Minecraft::Minecraft() {
     regenerarEntorno();
 }
 void Minecraft::simulacion() {
-    int opcion, cantidadSandias = 0;
+    int opcion, cantidadSandias = 0, cantidadMadera = 0;
     bool haySandias = false;
     cout << "\n-----Minecraft-----\n" << endl;
     imprimirEntorno();
@@ -37,12 +37,56 @@ void Minecraft::simulacion() {
         simulacion();
         break;
     case 2:
+        if (hayHacha(inventario)) {
+            
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (matriz[i][j] == 'M') {
+                        cantidadMadera++;
+                    }
+                }
+            }
+            jamones -= 2;
+            inventario.push_back(Objeto("Madera", 1, false, cantidadMadera));
+        } else {
+            cout << "No tienes hachas en tu inventario" << endl;
+        }
+        simulacion();
         break;
     case 3:
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matriz[i][j] == 'M') {
+                    cantidadMadera++;
+                }
+            }
+        }
+        jamones -= 4;
+        inventario.push_back(Objeto("Madera", 2, false, cantidadMadera));
+        simulacion();
         break;
     case 4:
+        Objeto objetoActual;
+        int cantidad = 0;
+        for (Objeto objeto : inventario) {
+            if (objeto.getNombre() == "Madera") {
+                cantidad = objeto.getCantidad();
+                objetoActual = objeto;
+                break;
+            }
+        }
+
+        if (cantidad == 0) {
+            cout << "No tienes suficiente madera" << endl;
+        } else {
+            jamones--;
+            cantidad--;
+            objetoActual.setCantidad(cantidad);
+            inventario.push_back(Objeto("Palos", 3, false, 2));
+        }
         break;
     case 5:
+
         break;
     case 6:
         break;
@@ -109,5 +153,13 @@ Minecraft::~Minecraft() {
         delete[] matriz[i];
     }
     delete[] matriz;
+}
+bool Minecraft::hayHacha(vector<Objeto> inventario) {
+    for (Objeto objeto : inventario) {
+        if (objeto.getNombre() == "Hacha") {
+            return true;
+        }
+    }
+    return false;
 }
 int Minecraft::jamones = 10;

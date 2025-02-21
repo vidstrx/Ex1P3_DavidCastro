@@ -15,5 +15,6 @@ public:
 	void eliminarObjeto();
 	void listarObjeto();
 	void imprimirEntorno();
+	bool hayHacha(vector<Objeto> inventario);
 };
 

@@ -5,6 +5,9 @@ Objeto::Objeto(string nombre, int durabilidad, bool comestible, int cantidad) {
 	this->comestible = comestible;
 	this->cantidad = cantidad;
 }
+Objeto::Objeto() {
+
+}
 string Objeto::getNombre() {
 	return this->nombre;
 }
