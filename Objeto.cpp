@@ -32,6 +32,3 @@ int Objeto::getCantidad() {
 void Objeto::setCantidad(int cantidad) {
 	this->cantidad = cantidad;
 }
-void Objeto::toString() {
-	cout << nombre << ": " << cantidad << endl;
-}

@@ -17,6 +17,5 @@ public:
 	void setComestible(bool comestible);
 	int getCantidad();
 	void setCantidad(int cantidad);
-	void toString();
 };
 
