@@ -7,7 +7,8 @@ Minecraft::Minecraft() {
     regenerarEntorno();
 }
 void Minecraft::simulacion() {
-    int opcion, cantidadSandias = 0, cantidadMadera = 0;
+    int opcion, cantidadSandias = 0, cantidadMadera = 0, cantidadPalos = 0;
+    Objeto objetoActual;
     bool haySandias = false;
     cout << "\n-----Minecraft-----\n" << endl;
     imprimirEntorno();
@@ -66,29 +67,54 @@ void Minecraft::simulacion() {
         simulacion();
         break;
     case 4:
-        Objeto objetoActual;
-        int cantidad = 0;
         for (Objeto objeto : inventario) {
-            if (objeto.getNombre() == "Madera") {
-                cantidad = objeto.getCantidad();
+            if (objeto.getNombre() == "Madera" && objeto.getCantidad() >= 3) {
+                cantidadMadera = objeto.getCantidad();
                 objetoActual = objeto;
                 break;
             }
         }
 
-        if (cantidad == 0) {
+        if (cantidadMadera == 0) {
             cout << "No tienes suficiente madera" << endl;
         } else {
             jamones--;
-            cantidad--;
-            objetoActual.setCantidad(cantidad);
+            cantidadMadera--;
+            objetoActual.setCantidad(cantidadMadera);
             inventario.push_back(Objeto("Palos", 3, false, 2));
         }
         break;
     case 5:
+        if (hayHacha(inventario)) {
+            cout << "Ya tienes un hacha en tu inventario" << endl;
+        } else {
+            for (Objeto objeto : inventario) {
+                if (objeto.getNombre() == "Madera" && objeto.getCantidad() >= 3) {
+                    cantidadMadera = objeto.getCantidad();
+                }
+                else if (objeto.getNombre() == "Palos" && objeto.getCantidad() >= 2) {
+                    cantidadPalos = objeto.getCantidad();
+                }
+            }
+            if (cantidadMadera < 3 || cantidadPalos < 2) {
+                cout << "No tienes suficientes materiales para craftear un hacha" << endl;
+            } else {
+                cantidadMadera -= 3;
+                cantidadPalos -= 2;
+                jamones--;
+                inventario.push_back(Objeto("Hacha de Madera", 4, false, 1));
+            }
+        }
 
         break;
     case 6:
+        for (Objeto objeto : inventario) {
+            if (objeto.getNombre() == "Sandias") {
+                cantidadSandias = objeto.getCantidad();
+                objetoActual = objeto;
+                break;
+            }
+        }
         break;
     case 7:
         listarObjeto();
